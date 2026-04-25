@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Base layer — editorial feel, warm cream paper, subtle grain
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --photo-width-full: 32vw;
+    --photo-width-collapsed: 12vw;
+    --photo-min-collapsed: 100px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Hash-anchor jumps land below the fixed nav, not underneath it */
+    scroll-padding-top: 100px;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Fixed grain overlay — gives the cream paper its texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    z-index: 9999;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  a {
+    @apply text-accent transition-opacity duration-200;
+  }
+
+  a:hover {
+    opacity: 0.7;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-heading tracking-tightest;
+    font-weight: 400;
+  }
+
+  ::selection {
+    background: #8B7355;
+    color: #F5F4F1;
+  }
+}
+
+/* ==========================================================================
+   Reusable editorial building blocks
+   ========================================================================== */
+
+@layer components {
+  .container-reading {
+    max-width: 900px;
+    margin-inline: auto;
+    padding-inline: 4rem;
+  }
+
+  @media (max-width: 900px) {
+    .container-reading {
+      padding-inline: 2rem;
+    }
+  }
+
+  .section-label {
+    @apply text-[0.7rem] uppercase tracking-[0.12em] text-accent mb-2;
+  }
+
+  .section-title {
+    @apply font-heading tracking-tightest;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    font-weight: 400;
+  }
+
+  .prose-editorial p {
+    @apply mb-6 text-[1.02rem];
+    max-width: 62ch;
+  }
+
+  .prose-editorial p:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose-editorial em {
+    @apply text-accent not-italic font-medium;
+  }
+
+  /* Italic text in serif fonts extends slightly beyond its glyph box
+     on the right side. When followed by roman text, the space between
+     them can appear to collapse. A small right margin restores room.
+     Scoped to contexts where em actually renders italic — not
+     .prose-editorial (which styles em as non-italic emphasis). */
+  .cs-hook em,
+  .pull-insight em,
+  .side-effects-row em,
+  .mascot-text em,
+  em.italic,
+  i {
+    margin-right: 0.15em;
+  }
+
+  /* "Pull quote" — the insight moment in a case study */
+  .pull-insight {
+    @apply font-heading italic text-accent;
+    font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+    line-height: 1.4;
+    border-left: 2px solid #8B7355;
+    padding: 0.5rem 0 0.5rem 1.75rem;
+    margin: 3rem 0;
+    max-width: 58ch;
+  }
+
+  /* Skill pills */
+  .chip {
+    @apply inline-block text-[0.8rem] text-ink-muted px-3 py-[0.45rem] rounded-full border border-border bg-paper transition-all duration-300;
+  }
+
+  .chip:hover {
+    @apply border-accent text-accent;
+  }
+
+  /* Tech-notes box at the bottom of case studies */
+  .tech-notes {
+    @apply bg-paper-2 border border-border rounded-lg p-6 mt-8;
+  }
+
+  .tech-notes dt {
+    @apply text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted mb-1;
+  }
+
+  .tech-notes dd {
+    @apply text-[0.9rem] text-ink mb-3 last:mb-0;
+  }
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* Respect the user's motion preference — this is not optional */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .animate-in { opacity: 1 !important; }
+}
+
+/* ==========================================================================
+   Magnetic hover base (JS applies transforms — CSS only sets the hint)
+   ========================================================================== */
+
+.magnetic,
+.magnetic-card,
+.magnetic-btn {
+  will-change: transform;
+}
+
+/* Invisible 20px hit area for magnetic elements so the effect
+   engages before the cursor touches the visible border */
+.magnetic::before,
+.magnetic-btn::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+}
+
+.magnetic,
+.magnetic-btn {
+  position: relative;
+  display: inline-block;
+}

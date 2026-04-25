@@ -1,0 +1,63 @@
+# robots.txt for aadarshrauniyar.com.np
+# ─────────────────────────────────────────────────────────────────────
+# Philosophy: this is a personal professional profile. Discoverability
+# via AI assistants (ChatGPT, Claude, Perplexity) is as important as
+# Google. Every major crawler is explicitly allowed.
+# ─────────────────────────────────────────────────────────────────────
+
+# Standard search engines
+User-agent: *
+Allow: /
+
+# OpenAI — ChatGPT training + search
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic — Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI / Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl — powers many downstream models
+User-agent: CCBot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# ByteDance / DeepSeek
+User-agent: Bytespider
+Allow: /
+
+# Mistral
+User-agent: MistralAI-User
+Allow: /
+
+Sitemap: https://aadarshrauniyar.com.np/sitemap.xml
