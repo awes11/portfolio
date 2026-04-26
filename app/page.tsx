@@ -23,11 +23,11 @@ const CASE_STUDIES = [
   },
   {
     slug: 'lead-management',
-    label: 'Data Platform',
+    label: 'Admin Dashboard',
     title: 'Lead Management Analytics Dashboard',
     blurb:
-      'Replaced a weekly reporting drill that used to take fifty-plus counsellors and officers compiling individual reports, plus branch heads and senior management consolidating them. Now real-time, six modules, zero manual effort.',
-    stack: 'Flask · PostgreSQL (CTEs, timestamptz) · Microsoft SSO · Chart.js',
+      'A custom admin-scoped analytics layer sitting alongside the vendor MIS — six modules so far, each one closing a specific reporting or visibility gap leadership had been working around manually. New modules added as new gaps surface.',
+    stack: 'Flask · PostgreSQL (CTEs, timestamptz, ROW_NUMBER) · Microsoft SSO · SheetJS',
   },
 ];
 

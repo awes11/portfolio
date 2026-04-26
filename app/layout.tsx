@@ -109,6 +109,48 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&display=swap"
           rel="stylesheet"
         />
+        <style dangerouslySetInnerHTML={{ __html: `
+/* Critical CSS — inlined to prevent FOUC on the photo sidebar.
+   The full styles still live in PhotoSlideshow.tsx and globals.css;
+   these are duplicated here only to constrain layout on first paint. */
+:root {
+  --photo-width-full: 32vw;
+  --photo-width-collapsed: 12vw;
+  --photo-min-collapsed: 100px;
+}
+.photo-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--photo-width-full);
+  height: 100vh;
+  z-index: 50;
+  overflow: hidden;
+  background: #F5F4F1;
+}
+.photo-sidebar img,
+.photo-sidebar .photo-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.main-content {
+  margin-left: var(--photo-width-full);
+}
+@media (max-width: 900px) {
+  .photo-sidebar {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+}
+        ` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

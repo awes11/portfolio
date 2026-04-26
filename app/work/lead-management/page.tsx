@@ -7,11 +7,11 @@ import { LeadDashboardDiagram } from '@/components/LeadDashboardDiagram';
 export const metadata: Metadata = {
   title: 'Lead Management Analytics Dashboard',
   description:
-    'An admin dashboard built to complement a vendor MIS — filling the analytics, search, and engagement gaps without replacing what already worked.',
+    'A custom admin-scoped analytics layer sitting alongside a vendor-built MIS — six modules so far, each one closing a specific reporting or visibility gap leadership had been working around manually.',
   openGraph: {
     title: 'Lead Management Dashboard — a case study',
     description:
-      'Filling the gaps in a vendor-built MIS. Flask + PostgreSQL, six modules, zero manual compile cycles.',
+      'An admin-scoped analytics layer that grows with the gaps. Flask + PostgreSQL, six modules, designed to keep extending.',
   },
 };
 
@@ -42,8 +42,8 @@ export default function LeadManagementPage() {
             </h1>
 
             <p className="cs-hook">
-              Sometimes the best solution isn&apos;t replacing the existing system.
-              It&apos;s <em>filling the gaps</em> with exactly what&apos;s missing.
+              An admin-scoped analytics layer that grows with the gaps —
+              <em>built once, extended whenever leadership hits a new wall</em>.
             </p>
 
             <div className="cs-meta">
@@ -54,11 +54,15 @@ export default function LeadManagementPage() {
                 </div>
                 <div>
                   <dt>Timeline</dt>
-                  <dd>~10 weeks, shipped Q2 2025</dd>
+                  <dd>~10 weeks for the first six modules · ongoing</dd>
+                </div>
+                <div>
+                  <dt>Audience</dt>
+                  <dd>Admin-scoped — leadership, branch heads, operations. Counsellors do not access it.</dd>
                 </div>
                 <div>
                   <dt>Stack</dt>
-                  <dd>Flask · PostgreSQL · JavaScript · Microsoft SSO · Chart.js · Windows Server + IIS + Waitress + PM2</dd>
+                  <dd>Flask · PostgreSQL (CTEs, ROW_NUMBER, timestamptz) · Vanilla JS (IIFE modules) · Microsoft SSO · SheetJS · Windows Server + IIS + Waitress + PM2</dd>
                 </div>
               </dl>
             </div>
@@ -75,38 +79,30 @@ export default function LeadManagementPage() {
 
             <div className="prose-editorial">
               <p>
-                The consultancy already had an MIS. It was custom-built by an external vendor.
-                It handled the thing every MIS handles — data entry. Counsellors logged student
-                leads, marked stages, updated follow-up dates. That part worked.
+                The consultancy runs on a vendor-built MIS. It handles what every MIS handles —
+                data entry, student records, stage tracking. The counsellor-facing side works.
               </p>
               <p>
-                The rest didn&apos;t. There were three gaps the vendor system wasn&apos;t built to close.
+                The admin side didn&apos;t. Leadership kept hitting the same kind of wall:
+                they&apos;d ask a question the vendor MIS couldn&apos;t answer, and the answer
+                would come back via a manual exercise. &ldquo;How are this user&apos;s leads
+                distributed across application stages?&rdquo; — pulled from the database by
+                hand. &ldquo;Who&apos;s actually been active this month?&rdquo; — counted off
+                spreadsheets. &ldquo;Which telecaller deserves credit for this lead&apos;s first
+                visit?&rdquo; — argued about in meetings.
               </p>
               <p>
-                First, <strong>no pipeline analytics</strong>. If leadership wanted to know how
-                conversions looked this week versus last week, the answer came from 50+
-                counsellors and officers compiling reports by hand every Monday, branch heads
-                consolidating those, and senior management reading the final numbers on Tuesday
-                — already stale.
+                Each one was a real operational question. Each one had a real database underneath
+                that could answer it. The vendor MIS just didn&apos;t expose those queries — and
+                getting them added to the vendor&apos;s roadmap would have taken months per gap,
+                if it happened at all.
               </p>
               <p>
-                Second, <strong>lead search was a form wall</strong>. Finding a student in the
-                vendor MIS meant scanning through a 40-field record layout to spot the three
-                things that actually matter in the moment: name, stage, next follow-up.
-                Counsellors had adapted by keeping their own side-spreadsheets. Which defeats
-                the point of having an MIS.
-              </p>
-              <p>
-                Third, <strong>no incentive to use the system well</strong>. Data entry felt
-                like a tax. The counsellors who were diligent about it got nothing for their
-                effort. The ones who cut corners faced no consequences. Adoption was uneven,
-                and the data quality suffered.
-              </p>
-              <p>
-                The obvious solution was to replace the vendor system with something better. It
-                was the wrong solution — the vendor system was already doing the data-entry job
-                competently, the team had learned it, and replacing it would have been a large
-                disruption for three fixable gaps.
+                Replacing the vendor MIS would have been the wrong answer. It does its
+                data-entry job, the team has learned it, and the cost of switching would dwarf
+                the cost of the gaps. The right answer was to build a separate admin-scoped
+                layer that reads from the same database and answers leadership&apos;s questions
+                directly — and keeps growing as new questions surface.
               </p>
             </div>
           </div>
@@ -123,24 +119,26 @@ export default function LeadManagementPage() {
             <div className="prose-editorial">
               <p>
                 The vendor MIS is good at what it does. I don&apos;t need to beat it at its own
-                game. I need to build what it doesn&apos;t do — on top of the data it already
-                collects.
+                game. I need to build what it doesn&apos;t do, scoped tightly to the people who
+                actually need it — admin and leadership.
               </p>
 
               <blockquote className="pull-insight">
-                &ldquo;Sometimes the best solutions aren&apos;t replacing existing systems.
-                They&apos;re filling the gaps with exactly what&apos;s needed.&rdquo;
+                &ldquo;Sometimes the best solution isn&apos;t replacing the existing system.
+                It&apos;s building exactly what it&apos;s missing — and leaving room to keep
+                building.&rdquo;
               </blockquote>
 
               <p>
-                A companion admin dashboard, reading from the same database, scoped tightly to
-                the three gaps. Analytics the vendor doesn&apos;t produce. A search experience
-                that prioritises what counsellors actually look at. A gamified usage tracker
-                that rewards the people doing it right.
+                A separate Flask + PostgreSQL dashboard, behind Microsoft SSO, reading from the
+                same database the vendor MIS writes to. Each module is a small focused tool that
+                answers one operational question leadership had been asking. Six modules so far.
+                More will come — every time leadership hits a new wall the vendor system
+                can&apos;t answer, that&apos;s a candidate for module number seven.
               </p>
               <p>
                 Two systems, one source of truth. The vendor MIS stays the system of record.
-                Mine becomes the system of use.
+                Mine is the admin&apos;s lens on it.
               </p>
             </div>
           </div>
@@ -157,9 +155,9 @@ export default function LeadManagementPage() {
             <div className="prose-editorial">
               <p>
                 A Flask + PostgreSQL dashboard sitting alongside the vendor MIS, reading from
-                the same database. Six modules, Microsoft SSO for auth (everyone was already on
-                Microsoft 365), and three headline features that mapped directly to the three
-                gaps.
+                the same database. Microsoft SSO for auth. Each module is a self-contained
+                vanilla-JS IIFE with its own CSS prefix, so modules can be added without
+                touching what already works.
               </p>
             </div>
 
@@ -167,32 +165,65 @@ export default function LeadManagementPage() {
 
             <div className="prose-editorial">
               <p>
-                <strong>Pipeline analytics.</strong> Real-time conversion rates by source,
-                counsellor, course, branch, week. What used to take fifty people a Monday
-                morning to compile now renders in half a second off a PostgreSQL query. The
-                Monday compile cycle is gone. Leadership looks at current numbers, not
-                last-week&apos;s numbers.
+                Six modules so far, each solving a specific gap leadership had been working
+                around manually:
               </p>
               <p>
-                <strong>Smart lead search — card-style, essentials first.</strong> Instead of a
-                40-field record, each lead shows as a small card: name, current stage, next
-                follow-up, last touch, assigned counsellor, institution, course. The things
-                counsellors actually need to see in the moment. Full record available one click
-                away for when they need it. Search is fuzzy, ranked, fast.
+                <strong>User Lead Stages.</strong> Pick a branch, role, and user; pick a country
+                template; see how that staff member&apos;s leads are distributed across the
+                application checklist stages. Replaced the &ldquo;can you pull a list of where
+                so-and-so&apos;s leads are sitting&rdquo; ad-hoc database query that used to
+                land in operations&apos; lap.
               </p>
               <p>
-                <strong>Gamified usage tracker.</strong> A points-based system that tracks MIS
-                hygiene — timely follow-ups, complete records, accurate stage transitions. Top
-                contributors show up on a leaderboard. It sounds small. It changed MIS adoption
-                overnight. Turns out people want to be recognised for doing the boring part
-                right; nobody had ever given them a way to be.
+                <strong>Lead Search.</strong> Look up any lead by name, phone, or ID. Returns up
+                to 30 ranked results with assigned counsellor, application count, and a full
+                profile view — education, test scores, checklist progress, remarks, activity
+                history. Replaces the form-wall lookup the vendor MIS forced admins through when
+                they needed to investigate a single lead.
               </p>
               <p>
-                The dashboard runs behind Microsoft SSO with role-based access. Admin sees
-                everything. Branch heads see their branch. Counsellors see their own pipeline
-                and their own position on the leaderboard. Deployed to the same Windows Server
-                stack as the other two production systems — IIS reverse-proxy to Waitress,
-                process-managed by PM2, Cloudflare Tunnel for public access.
+                <strong>Usage Tracker.</strong> Scores staff activity over any date range using
+                weighted points — remarks (by character count, so substance counts more than
+                clicks), documents uploaded, follow-ups, leads created. Filterable by branch
+                and role, searchable, sortable. Gives leadership an honest read on who&apos;s
+                actually engaging with the system. Not visible to counsellors — it&apos;s a
+                management tool, not a public scoreboard.
+              </p>
+              <p>
+                <strong>User Remarks.</strong> Audits a specific user&apos;s remarks across
+                leads, split between assigned and unassigned. Percentage bar visualisation, CSV
+                export. Replaces the &ldquo;is this person actually doing the work or just
+                logging in&rdquo; question that used to require pulling raw database extracts.
+              </p>
+              <p>
+                <strong>Telecaller Visits.</strong> The hard one. Awards first-visit credit to
+                whichever telecaller was last assigned to a lead before the visit happened. Uses
+                a PostgreSQL CTE with <code>ROW_NUMBER</code> to find the first-ever visit per
+                lead and walk the assignment history backwards. Replaces meetings where people
+                argued about who deserved credit.
+              </p>
+              <p>
+                <strong>Counsellor Referrals.</strong> Tracks handoffs — a counsellor earns a
+                &ldquo;sent&rdquo; point when another counsellor is assigned to their lead after
+                them. Uses a CTE that unions the assigned-user and follower tables. Cascading
+                branch → counsellor dropdowns, expandable leaderboard, sent-leads panel,
+                multi-sheet Excel export. Replaces the previously invisible reality that
+                referrals were happening but nobody could measure them.
+              </p>
+              <p>
+                The whole thing runs behind Microsoft SSO. Admin and leadership see everything;
+                role gating keeps the dashboard scoped to people who should have it. Deployed
+                on the same Windows Server stack as the other two production systems — IIS
+                reverse-proxy to Waitress, process-managed by PM2, Cloudflare Tunnel for public
+                access.
+              </p>
+              <p>
+                <em>And it&apos;s designed to keep growing.</em> Every module is built as a
+                self-contained JS module with a unique CSS prefix (<code>ul-</code>, <code>ls-</code>,{' '}
+                <code>ut-</code>, <code>ur-</code>, <code>tv-</code>, <code>cr-</code>) so new
+                modules drop in without touching existing code. Every time leadership hits a new
+                wall the vendor MIS can&apos;t answer, that&apos;s the brief for module seven.
               </p>
             </div>
           </div>
@@ -208,37 +239,41 @@ export default function LeadManagementPage() {
 
             <div className="prose-editorial">
               <p>
-                The Monday reporting drill stopped existing. Fifty-plus people got their Monday
-                mornings back. Branch heads stopped aggregating spreadsheets. Senior management
-                started the week looking at live numbers instead of week-old ones.
+                Operational questions that used to land in someone&apos;s lap as ad-hoc work
+                started getting answered by leadership themselves, on demand. The
+                &ldquo;can-you-pull-me-a-list&rdquo; queue shrank to almost nothing.
               </p>
               <p>
-                Counsellors stopped keeping side-spreadsheets. The smart search made the vendor
-                MIS useful in the moment instead of just useful for compliance. Data quality
-                improved because now every field mattered — the dashboard exposed missing data
-                in ways the vendor system never did.
+                The Usage Tracker changed how leadership sees the team. Engagement was always
+                measurable in principle, but never visible in practice — now it is. People
+                who&apos;d been quietly doing the work without recognition got noticed.
+                Conversely, gaps in coverage that used to hide in the data became obvious.
               </p>
               <p>
-                The gamification was the surprise. I expected it to work a little. It worked
-                more than a little. Once people could see their ranking, MIS hygiene became
-                competitive. Logged follow-ups jumped. Stage transitions got updated promptly.
-                The data got cleaner because the people closest to it finally had a reason to
-                care.
+                The Telecaller Visits and Counsellor Referrals modules turned out to settle long-running
+                disputes about credit. Both used to be argued about in meetings. Both are now
+                attributable from the database directly, with the logic visible and the export
+                shareable. The arguments stopped.
+              </p>
+              <p>
+                And the dashboard kept growing. It started as four modules. It&apos;s six now.
+                The framework — modular JS, CSS-prefixed scopes, PostgreSQL views — means each
+                new module ships in days, not weeks. The pattern works.
               </p>
             </div>
 
             <div className="outcomes-grid">
               <div className="outcome">
                 <div className="outcome-number">6</div>
-                <div className="outcome-label">modules complementing the vendor MIS</div>
+                <div className="outcome-label">modules shipped, more on the way</div>
               </div>
               <div className="outcome">
-                <div className="outcome-number">50+</div>
-                <div className="outcome-label">people off the Monday compile cycle</div>
+                <div className="outcome-number">admin-scoped</div>
+                <div className="outcome-label">behind Microsoft SSO, leadership-only</div>
               </div>
               <div className="outcome">
-                <div className="outcome-number">real-time</div>
-                <div className="outcome-label">replaces weekly, stale reporting</div>
+                <div className="outcome-number">days, not weeks</div>
+                <div className="outcome-label">to ship a new module on this framework</div>
               </div>
             </div>
           </div>
@@ -256,37 +291,40 @@ export default function LeadManagementPage() {
               <dl>
                 <dt>Backend</dt>
                 <dd>Python + Flask. REST API against the shared PostgreSQL database that the
-                vendor MIS also writes to. Heavy use of CTEs and window functions for the
-                analytics queries — faster and cleaner than aggregating in Python.</dd>
+                vendor MIS writes to. Heavy use of CTEs and window functions (<code>ROW_NUMBER</code>{' '}
+                in particular, for the Telecaller Visits attribution logic) — faster and cleaner
+                than aggregating in Python.</dd>
 
                 <dt>Database</dt>
                 <dd>PostgreSQL. Proper use of timestamptz for everything time-related (Kathmandu
                 is UTC+5:45, not a time zone that tolerates naive datetimes). Read-only access
-                from the dashboard side — only the vendor system writes to the core tables.</dd>
+                from the dashboard — only the vendor MIS writes to the core tables.</dd>
 
-                <dt>Frontend</dt>
-                <dd>Vanilla JavaScript in an IIFE-modular pattern, Chart.js for the analytics
-                views. No framework — the dashboard renders server-side with Flask templates and
-                progressively enhances on the client. Simple, fast, reliable.</dd>
+                <dt>Frontend architecture</dt>
+                <dd>Vanilla JavaScript, no framework. Each module is a self-contained IIFE with
+                a unique CSS prefix (<code>ul-</code>, <code>ls-</code>, <code>ut-</code>,{' '}
+                <code>ur-</code>, <code>tv-</code>, <code>cr-</code>) so styles and state can&apos;t
+                leak between modules. Adding a new module means adding a new file and a new
+                prefix — no touching existing code.</dd>
 
-                <dt>Auth</dt>
-                <dd>Microsoft SSO via MSAL. The whole org was already on Microsoft 365, so SSO
-                was the natural choice. Three-tier RBAC: admin, branch head, counsellor.</dd>
+                <dt>Auth &amp; scope</dt>
+                <dd>Microsoft SSO via MSAL — the whole org was already on Microsoft 365.
+                Admin-scoped: leadership and operations roles only. Counsellors do not have
+                access. The dashboard is a management lens, not a counsellor tool.</dd>
 
-                <dt>Gamification</dt>
-                <dd>Point logic calculated nightly from MIS activity — complete records, timely
-                follow-ups, accurate stage transitions. Leaderboard resets weekly and monthly.
-                Per-user view shows rank, points, and what contributed.</dd>
+                <dt>Exports</dt>
+                <dd>SheetJS for Excel/CSV exports across modules. The Counsellor Referrals
+                module produces a multi-sheet workbook (summary + per-counsellor breakdown).</dd>
 
                 <dt>Deployment</dt>
                 <dd>Windows Server 2019 with IIS reverse-proxy to Waitress WSGI, process-managed
                 by PM2. Cloudflare Tunnel for public egress. Same stack as IR Connect and
-                Student Analytics — cost-efficient, zero cold-start latency.</dd>
+                Student Analytics.</dd>
 
                 <dt>What I&apos;d do differently</dt>
-                <dd>The gamification launched without an opt-out. A few counsellors found the
-                leaderboard stressful rather than motivating. I added a &ldquo;hide my rank&rdquo;
-                toggle later, but it should have shipped with one from day one.</dd>
+                <dd>The first module used inline <code>style</code> attributes for layout instead
+                of CSS classes. By module four I&apos;d settled on the prefixed-class pattern
+                and had to retrofit. Should have started with the convention from day one.</dd>
               </dl>
             </div>
           </div>
@@ -362,7 +400,11 @@ export default function LeadManagementPage() {
           max-width: 58ch;
           margin-bottom: 3.5rem;
         }
-        .cs-hook em { color: #8B7355; font-style: italic; margin-right: 0.15em; }
+        .cs-hook em {
+          color: #8B7355;
+          font-style: italic;
+          margin-right: 0.15em;
+        }
 
         .cs-meta {
           background: #ECEAE6;
@@ -438,12 +480,12 @@ export default function LeadManagementPage() {
         }
         .outcome-number {
           font-family: 'Newsreader', Georgia, serif;
-          font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+          font-size: clamp(1.4rem, 3vw, 2rem);
           color: #8B7355;
           font-weight: 400;
           letter-spacing: -0.02em;
           margin-bottom: 0.5rem;
-          line-height: 1;
+          line-height: 1.1;
         }
         .outcome-label {
           font-size: 0.88rem;

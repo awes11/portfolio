@@ -80,6 +80,8 @@ export function PhotoSlideshow() {
             style={{ objectPosition: portrait.position ?? 'center center' }}
             loading={i === 0 ? 'eager' : 'lazy'}
             decoding="async"
+            width="900"
+            height="1600"
           />
         ))}
       </div>

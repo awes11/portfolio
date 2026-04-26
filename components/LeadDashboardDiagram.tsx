@@ -3,24 +3,27 @@
 /**
  * Diagram for the Lead Dashboard case study.
  *
- * Visual thesis: the vendor-built MIS handles data entry; my dashboard
- * sits alongside it and fills the gaps — analytics, smart search, usage
- * tracking. Not a replacement. A complement.
+ * Visual thesis: the vendor MIS handles data entry; my admin-scoped
+ * dashboard sits alongside it as a separate read layer with one module
+ * per operational question leadership wants answered. Six modules so
+ * far. More to come.
  *
- * Three panels:
+ * Three sections:
  *   1. Vendor MIS (data entry) — what already existed
- *   2. The gaps — analytics, search UX, engagement — surfaced between them
- *   3. My admin dashboard — the gap-filler
+ *   2. The data layer — shared PostgreSQL, both systems read it,
+ *      only the vendor writes
+ *   3. Admin dashboard — six labelled module cards, with a placeholder
+ *      seventh "..." card hinting at growth
  */
 
 export function LeadDashboardDiagram() {
   return (
     <figure className="diagram-frame">
       <svg
-        viewBox="0 0 1100 440"
+        viewBox="0 0 1100 520"
         xmlns="http://www.w3.org/2000/svg"
         role="img"
-        aria-label="Diagram: vendor MIS on the left, three gap cards in the middle, admin dashboard on the right"
+        aria-label="Diagram: vendor MIS on the left, shared PostgreSQL in the middle, six admin dashboard modules on the right with a seventh placeholder for future growth"
       >
         <defs>
           <filter id="rough-l" x="-5%" y="-5%" width="110%" height="110%">
@@ -31,7 +34,6 @@ export function LeadDashboardDiagram() {
             markerWidth="8" markerHeight="8" orient="auto">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="#8B7355" />
           </marker>
-          {/* Dashed connector style */}
           <marker id="arrow-l-dash" viewBox="0 0 10 10" refX="8" refY="5"
             markerWidth="7" markerHeight="7" orient="auto">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="#8B7355" opacity="0.6" />
@@ -39,145 +41,149 @@ export function LeadDashboardDiagram() {
         </defs>
 
         {/* ─────────── PANEL 1: Vendor MIS ─────────── */}
-        <g transform="translate(30, 0)">
-          <text x="140" y="30" textAnchor="middle" className="panel-label-l">
-            Vendor MIS (data entry)
+        <g transform="translate(20, 0)">
+          <text x="120" y="30" textAnchor="middle" className="panel-label-l">
+            Vendor MIS
+          </text>
+          <text x="120" y="48" textAnchor="middle" className="panel-sub-l">
+            data entry · system of record
           </text>
 
-          <g transform="translate(20, 60)" filter="url(#rough-l)">
-            <rect width="240" height="320" fill="#FFFFFF" stroke="#8B7355" strokeWidth="1.2" rx="4" />
-            {/* Toolbar */}
-            <rect x="0" y="0" width="240" height="26" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="0.8" />
+          <g transform="translate(20, 70)" filter="url(#rough-l)">
+            <rect width="200" height="380" fill="#FFFFFF" stroke="#8B7355" strokeWidth="1.2" rx="4" />
+            <rect x="0" y="0" width="200" height="26" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="0.8" />
             <circle cx="10" cy="13" r="2.5" fill="#C9544D" opacity="0.5" />
             <circle cx="20" cy="13" r="2.5" fill="#E8B547" opacity="0.5" />
             <circle cx="30" cy="13" r="2.5" fill="#7FA882" opacity="0.5" />
-            <text x="120" y="17" textAnchor="middle" className="mis-title">Lead entry form</text>
+            <text x="100" y="17" textAnchor="middle" className="mis-title">Lead entry form</text>
 
-            {/* Form fields — lots of them, crowded */}
-            <g transform="translate(16, 44)">
-              {['Student name', 'Phone number', 'Email', 'Source', 'Counsellor', 'Course', 'Institution', 'Stage', 'Notes', 'Follow-up date'].map((label, i) => (
-                <g key={label} transform={`translate(0, ${i * 25})`}>
+            <g transform="translate(14, 42)">
+              {['Student name', 'Phone number', 'Email', 'Source', 'Counsellor', 'Course', 'Institution', 'Stage', 'Notes', 'Follow-up'].map((label, i) => (
+                <g key={label} transform={`translate(0, ${i * 30})`}>
                   <text x="0" y="8" className="mis-field-label">{label}</text>
-                  <rect x="0" y="12" width="208" height="9" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="0.5" rx="1" />
-                  <rect x="2" y="14" width={30 + (i * 7) % 90} height="5" fill="#B0A090" opacity="0.3" />
+                  <rect x="0" y="12" width="172" height="10" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="0.5" rx="1" />
+                  <rect x="2" y="14" width={30 + (i * 9) % 90} height="6" fill="#B0A090" opacity="0.3" />
                 </g>
               ))}
             </g>
           </g>
-          <text x="140" y="400" textAnchor="middle" className="panel-sub-l">
-            where the data lives
+        </g>
+
+        {/* ─────────── PANEL 2: Shared database ─────────── */}
+        <g transform="translate(280, 0)">
+          <text x="80" y="30" textAnchor="middle" className="panel-label-l">
+            Shared PostgreSQL
+          </text>
+          <text x="80" y="48" textAnchor="middle" className="panel-sub-l">
+            one source of truth
+          </text>
+
+          {/* Database cylinder */}
+          <g transform="translate(20, 130)">
+            <ellipse cx="60" cy="10" rx="60" ry="12" fill="#FAF6EE" stroke="#8B7355" strokeWidth="1.2" />
+            <path d="M 0 10 L 0 180 A 60 12 0 0 0 120 180 L 120 10" fill="#FAF6EE" stroke="#8B7355" strokeWidth="1.2" />
+            <ellipse cx="60" cy="10" rx="60" ry="12" fill="#FAF6EE" stroke="#8B7355" strokeWidth="1.2" />
+            {/* Inner rings to suggest a cylinder */}
+            <ellipse cx="60" cy="60" rx="60" ry="12" fill="none" stroke="#D4C8B0" strokeWidth="0.5" />
+            <ellipse cx="60" cy="120" rx="60" ry="12" fill="none" stroke="#D4C8B0" strokeWidth="0.5" />
+            {/* Labels */}
+            <text x="60" y="40" textAnchor="middle" className="db-table-label">leads</text>
+            <text x="60" y="100" textAnchor="middle" className="db-table-label">remarks</text>
+            <text x="60" y="160" textAnchor="middle" className="db-table-label">visits · followers</text>
+          </g>
+
+          {/* Read-only annotation on the dashboard side */}
+          <text x="80" y="430" textAnchor="middle" className="panel-sub-l" fill="#8B7355">
+            dashboard reads only
           </text>
         </g>
 
-        {/* ─────────── CONNECTOR: data flows OUT to fill gaps ─────────── */}
+        {/* Arrow: vendor → DB (write) */}
         <g>
-          <path d="M 320 220 Q 360 220 395 200" fill="none"
+          <path d="M 240 230 Q 280 230 305 220" fill="none"
+            stroke="#8B7355" strokeWidth="1.4" markerEnd="url(#arrow-l)" />
+          <text x="270" y="215" textAnchor="middle" className="connector-label-l">writes</text>
+        </g>
+
+        {/* Arrow: DB → dashboard (read) — dashed */}
+        <g>
+          <path d="M 425 220 Q 470 220 510 210" fill="none"
             stroke="#8B7355" strokeWidth="1.3" strokeDasharray="3 3"
             markerEnd="url(#arrow-l-dash)" opacity="0.7" />
-          <path d="M 320 240 Q 360 260 395 260" fill="none"
+          <path d="M 425 240 Q 470 240 510 250" fill="none"
             stroke="#8B7355" strokeWidth="1.3" strokeDasharray="3 3"
             markerEnd="url(#arrow-l-dash)" opacity="0.7" />
-          <text x="360" y="200" textAnchor="middle" className="connector-label-l">
-            read
-          </text>
+          <text x="470" y="208" textAnchor="middle" className="connector-label-l">reads</text>
         </g>
 
-        {/* ─────────── PANEL 2: THE GAPS (what vendor MIS didn't do) ─────────── */}
-        <g transform="translate(400, 60)">
-          <text x="150" y="-10" textAnchor="middle" className="panel-label-l">
-            The gaps
+        {/* ─────────── PANEL 3: Admin dashboard with 6 module cards + 1 placeholder ─────────── */}
+        <g transform="translate(530, 0)">
+          <text x="280" y="30" textAnchor="middle" className="panel-label-l">
+            Admin dashboard
+          </text>
+          <text x="280" y="48" textAnchor="middle" className="panel-sub-l">
+            six modules so far · admin-scoped
           </text>
 
-          {/* Gap card 1: Analytics */}
-          <g transform="translate(0, 20)">
-            <rect width="300" height="80" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="1" strokeDasharray="4 3" rx="4" />
-            <text x="15" y="22" className="gap-title">No pipeline analytics</text>
-            <text x="15" y="40" className="gap-desc">50+ people compile reports by hand, weekly.</text>
-            <text x="15" y="58" className="gap-desc">Leadership sees numbers after they&apos;re stale.</text>
-          </g>
-
-          {/* Gap card 2: Search */}
-          <g transform="translate(0, 115)">
-            <rect width="300" height="80" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="1" strokeDasharray="4 3" rx="4" />
-            <text x="15" y="22" className="gap-title">Lead search is a form wall</text>
-            <text x="15" y="40" className="gap-desc">Counsellors hunt through 40-field records to find</text>
-            <text x="15" y="58" className="gap-desc">the three things that matter: name, stage, next touch.</text>
-          </g>
-
-          {/* Gap card 3: Engagement */}
-          <g transform="translate(0, 210)">
-            <rect width="300" height="80" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="1" strokeDasharray="4 3" rx="4" />
-            <text x="15" y="22" className="gap-title">No incentive to use the system well</text>
-            <text x="15" y="40" className="gap-desc">Data entry feels like a tax. Adoption is uneven.</text>
-            <text x="15" y="58" className="gap-desc">The people doing it right get nothing for it.</text>
-          </g>
-        </g>
-
-        {/* ─────────── CONNECTOR: gaps feed into dashboard ─────────── */}
-        <g>
-          <path d="M 710 110 L 770 170" fill="none"
-            stroke="#8B7355" strokeWidth="1.4" markerEnd="url(#arrow-l)" />
-          <path d="M 710 205 L 770 205" fill="none"
-            stroke="#8B7355" strokeWidth="1.4" markerEnd="url(#arrow-l)" />
-          <path d="M 710 300 L 770 240" fill="none"
-            stroke="#8B7355" strokeWidth="1.4" markerEnd="url(#arrow-l)" />
-        </g>
-
-        {/* ─────────── PANEL 3: Admin Dashboard (the gap-filler) ─────────── */}
-        <g transform="translate(780, 0)">
-          <text x="145" y="30" textAnchor="middle" className="panel-label-l">
-            Admin dashboard (complement)
-          </text>
-
-          <g transform="translate(20, 60)" filter="url(#rough-l)">
-            <rect width="250" height="320" fill="#FFFFFF" stroke="#8B7355" strokeWidth="1.2" rx="4" />
-            {/* Header */}
-            <rect x="0" y="0" width="250" height="26" fill="#F5F4F1" stroke="#D4D0C8" strokeWidth="0.8" />
-            <circle cx="10" cy="13" r="2.5" fill="#8B7355" opacity="0.7" />
-            <text x="22" y="17" className="dash-title-l">Admin</text>
-            <text x="230" y="17" textAnchor="end" className="live-dot-l">● live</text>
-
-            {/* Pipeline chart — the analytics gap, filled */}
-            <g transform="translate(12, 38)">
-              <text x="0" y="10" className="dash-module-label">Pipeline analytics</text>
-              {[60, 78, 55, 92, 70, 88].map((h, i) => (
-                <rect key={i} x={i * 36} y={60 - h * 0.5} width="28" height={h * 0.5}
-                  fill="#8B7355" opacity={0.55 + i * 0.05} />
-              ))}
-              <line x1="0" y1="60" x2="216" y2="60" stroke="#5C5C5C" strokeWidth="0.5" />
-            </g>
-
-            {/* Smart lead card — the search gap, filled */}
-            <g transform="translate(12, 125)">
-              <text x="0" y="10" className="dash-module-label">Smart lead search</text>
-              <rect x="0" y="16" width="226" height="48" fill="#FAF6EE" stroke="#D4D0C8" strokeWidth="0.6" rx="4" />
-              <text x="8" y="30" className="card-name">Aarav Sharma</text>
-              <rect x="8" y="36" width="50" height="8" fill="#8B7355" rx="2" />
-              <text x="11" y="43" className="card-stage">APPLICATION</text>
-              <text x="65" y="43" className="card-meta">· follow-up: tomorrow</text>
-              <text x="8" y="57" className="card-meta-sub">last touch 3d ago · Coventry · B.Eng CS</text>
-            </g>
-
-            {/* Gamification — the engagement gap, filled */}
-            <g transform="translate(12, 200)">
-              <text x="0" y="10" className="dash-module-label">Usage tracker</text>
-              {[
-                { name: 'Priya', pts: 420, w: 160 },
-                { name: 'Rohan', pts: 380, w: 144 },
-                { name: 'You', pts: 310, w: 118 },
-              ].map((u, i) => (
-                <g key={u.name} transform={`translate(0, ${i * 24 + 20})`}>
-                  <text x="0" y="9" className="card-name-sm">{i + 1}. {u.name}</text>
-                  <rect x="48" y="3" width="180" height="6" fill="#ECEAE6" rx="3" />
-                  <rect x="48" y="3" width={u.w} height="6" fill="#8B7355" rx="3" />
-                  <text x="232" y="9" textAnchor="end" className="card-meta-sub">{u.pts} pts</text>
-                </g>
-              ))}
-            </g>
-          </g>
-          <text x="145" y="400" textAnchor="middle" className="panel-sub-l">
-            where the data becomes useful
-          </text>
+          {(() => {
+            const modules = [
+              { code: 'ul-', name: 'User Lead Stages',     desc: 'Lead pipeline by user × stage' },
+              { code: 'ls-', name: 'Lead Search',          desc: 'Lookup by name · phone · ID' },
+              { code: 'ut-', name: 'Usage Tracker',        desc: 'Weighted activity scoring' },
+              { code: 'ur-', name: 'User Remarks',         desc: 'Audit assigned vs unassigned' },
+              { code: 'tv-', name: 'Telecaller Visits',    desc: 'First-visit attribution (CTE)' },
+              { code: 'cr-', name: 'Counsellor Referrals', desc: 'Handoff tracking · Excel export' },
+            ];
+            // 4 columns × 2 rows grid; 7th cell is the "+ more" placeholder
+            const cols = 4;
+            const cardW = 130;
+            const cardH = 90;
+            const gapX = 10;
+            const gapY = 14;
+            return (
+              <g transform="translate(0, 70)">
+                {modules.map((m, i) => {
+                  const col = i % cols;
+                  const row = Math.floor(i / cols);
+                  const x = col * (cardW + gapX);
+                  const y = row * (cardH + gapY);
+                  return (
+                    <g key={m.code} transform={`translate(${x}, ${y})`}>
+                      <rect width={cardW} height={cardH} fill="#FFFFFF"
+                        stroke="#8B7355" strokeWidth="0.8" rx="4" />
+                      {/* Code chip */}
+                      <rect x="8" y="8" width="26" height="14" fill="#8B7355" rx="3" />
+                      <text x="21" y="18" textAnchor="middle" className="mod-code">{m.code}</text>
+                      {/* Name */}
+                      <text x="8" y="44" className="mod-name">{m.name}</text>
+                      {/* Desc — wraps via tspan */}
+                      <text x="8" y="62" className="mod-desc">{m.desc}</text>
+                    </g>
+                  );
+                })}
+                {/* Placeholder 7th card */}
+                {(() => {
+                  const i = 6;
+                  const col = i % cols;
+                  const row = Math.floor(i / cols);
+                  const x = col * (cardW + gapX);
+                  const y = row * (cardH + gapY);
+                  return (
+                    <g transform={`translate(${x}, ${y})`}>
+                      <rect width={cardW} height={cardH} fill="transparent"
+                        stroke="#8B7355" strokeWidth="0.8" strokeDasharray="4 3" rx="4" opacity="0.6" />
+                      <text x={cardW / 2} y={cardH / 2 - 2} textAnchor="middle" className="mod-more-label">
+                        + module 7
+                      </text>
+                      <text x={cardW / 2} y={cardH / 2 + 14} textAnchor="middle" className="mod-more-sub">
+                        when the next gap shows up
+                      </text>
+                    </g>
+                  );
+                })()}
+              </g>
+            );
+          })()}
         </g>
 
         <style>{`
@@ -189,7 +195,7 @@ export function LeadDashboardDiagram() {
           }
           .panel-sub-l {
             font-family: 'Newsreader', Georgia, serif;
-            font-size: 11px;
+            font-size: 10.5px;
             font-style: italic;
             fill: #5C5C5C;
           }
@@ -210,71 +216,46 @@ export function LeadDashboardDiagram() {
             font-size: 7px;
             fill: #5C5C5C;
           }
-          .gap-title {
-            font-family: 'Newsreader', Georgia, serif;
-            font-size: 13px;
-            font-weight: 500;
-            fill: #8B7355;
-          }
-          .gap-desc {
-            font-family: "DM Sans", sans-serif;
-            font-size: 9px;
-            fill: #5C5C5C;
-          }
-          .dash-title-l {
-            font-family: "DM Sans", sans-serif;
+          .db-table-label {
+            font-family: 'Courier New', monospace;
             font-size: 10px;
-            fill: #1A1A1A;
-            font-weight: 500;
-          }
-          .live-dot-l {
-            font-family: "DM Sans", sans-serif;
-            font-size: 8px;
             fill: #8B7355;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            font-weight: 600;
           }
-          .dash-module-label {
-            font-family: "DM Sans", sans-serif;
+          .mod-code {
+            font-family: 'Courier New', monospace;
             font-size: 8px;
-            fill: #5C5C5C;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 500;
+            fill: #FFFFFF;
+            font-weight: 700;
           }
-          .card-name {
+          .mod-name {
             font-family: 'Newsreader', Georgia, serif;
             font-size: 11px;
             fill: #1A1A1A;
             font-weight: 500;
           }
-          .card-name-sm {
-            font-family: 'Newsreader', Georgia, serif;
-            font-size: 10px;
-            fill: #1A1A1A;
-          }
-          .card-stage {
+          .mod-desc {
             font-family: "DM Sans", sans-serif;
-            font-size: 6px;
-            fill: #FFFFFF;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-          }
-          .card-meta {
-            font-family: "DM Sans", sans-serif;
-            font-size: 8px;
+            font-size: 8.5px;
             fill: #5C5C5C;
           }
-          .card-meta-sub {
-            font-family: "DM Sans", sans-serif;
-            font-size: 7.5px;
+          .mod-more-label {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 11px;
+            font-style: italic;
             fill: #8B7355;
+          }
+          .mod-more-sub {
+            font-family: "DM Sans", sans-serif;
+            font-size: 8px;
+            fill: #8B7355;
+            opacity: 0.75;
           }
         `}</style>
       </svg>
 
       <figcaption>
-        The vendor MIS holds the data. My admin dashboard turns it into something leadership can use.
+        The vendor MIS holds the data. The admin dashboard reads it, one focused module at a time.
       </figcaption>
 
       <style jsx>{`
@@ -289,7 +270,7 @@ export function LeadDashboardDiagram() {
           display: block;
           width: 100%;
           height: auto;
-          max-height: 480px;
+          max-height: 540px;
         }
         figcaption {
           margin-top: 1rem;
